@@ -1,10 +1,38 @@
 // Defining text characters for the empty and full hearts for you to use later.
-const EMPTY_HEART = '♡'
-const FULL_HEART = '♥'
+const EMPTYHEART = '♡';
+const FULLHEART = '♥';
 
-// Your JavaScript code goes here!
+document.addEventListener('DOMContentLoaded', () => {
+  const emptyHeart = document.querySelector('.empty-heart');
+  const fullHeart = document.querySelector('.full-heart');
+  const errorModal = document.getElementById('modal');
+  
+  // Add hidden class to error modal on page load
+  errorModal.classList.add('hidden');
 
+  emptyHeart.addEventListener('click', () => {
+    mimicServerCall()
+      .then(() => {
+        emptyHeart.classList.remove('empty-heart');
+        emptyHeart.classList.add('full-heart', 'activated-heart'); // Combine class additions
+      })
+      .catch((error) => {
+        // Display error modal and message
+        errorModal.classList.remove('hidden');
+        errorModal.textContent = error;
 
+        // Hide the error modal after 3 seconds
+        setTimeout(() => {
+          errorModal.classList.add('hidden');
+        }, 3000);
+      });
+  });
+
+  fullHeart.addEventListener('click', () => {
+    emptyHeart.classList.add('empty-heart');
+    emptyHeart.classList.remove('full-heart', 'activated-heart'); // Remove activated-heart class
+  });
+});
 
 
 //------------------------------------------------------------------------------
